@@ -1,0 +1,9 @@
+aioredis==2.0.1
+alembic==1.8.0
+asyncpg==0.25.0
+fastapi==0.78.0
+httpx==0.23.0
+psycopg2-binary==2.9.3
+pydantic[dotenv]==1.9.1
+SQLAlchemy==1.4.37
+uvicorn==0.17.6

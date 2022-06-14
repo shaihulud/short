@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - dev.env
+    command:
+      ['start', '8000']
+
+  db:
+    image: postgres:13
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=short
+      - POSTGRES_DB=short
+      - POSTGRES_PASSWORD=short
+
+  redis:
+    image: redis:alpine
+    command: redis-server
+    ports:
+    - "6379:6379"
