@@ -13,4 +13,4 @@ async def get_db():
         await db.close()
 
 
-redis: Redis = aioredis.from_url(settings.REDIS_URI)
+redis: Redis = aioredis.from_url(settings.REDIS_URI, encoding="utf-8", decode_responses=True)
