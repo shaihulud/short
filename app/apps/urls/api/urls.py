@@ -152,5 +152,11 @@ async def delete_short_url(short_code: str, session: AsyncSession = Depends(get_
     await models.UrlStats.delete_by_url_id(session, short_code)
     await models.Url.delete_by_id(session, short_code)
     await session.commit()
-    await redis.delete(settings.REDIS_URL_KEY.format(short_code))
+
+    try:
+        await redis.delete(settings.REDIS_URL_KEY.format(short_code))
+    except RedisError:
+        # Удалится само, а юзеру знать о таких ошибках не обязательно
+        logger.exception("Error while deleting data from Redis")
+
     return Response(status_code=status.HTTP_204_NO_CONTENT)
